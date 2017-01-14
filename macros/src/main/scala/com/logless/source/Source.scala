@@ -19,12 +19,13 @@ object Source {
 
     @tailrec
     def extract(s: Symbol)(p: Symbol => Boolean): Option[Symbol] =
-      if (s == null) None
+      if (s == null || s == NoSymbol) None
       else if (p(s)) Some(s)
       else extract(s.owner)(p)
 
     val enclosingClass = extract(owner) { s =>
-      s.isClass || s.isModuleClass || s.isModule || s.isPackage || s.isPackageClass
+      (s.name.decodedName.toString != "$anonfun") &&
+        (s.isClass || s.isModuleClass || s.isModule || s.isPackage || s.isPackageClass)
     }
 
     if (enclosingClass.isEmpty) c.abort(c.enclosingPosition, "Can not detect enclosing element (class, object, package)")
