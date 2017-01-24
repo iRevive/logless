@@ -1,4 +1,6 @@
-package com.logless
+package com.logless.builder
+
+import com.logless.builder
 
 import scala.language.implicitConversions
 
@@ -22,7 +24,7 @@ final case class :+:[+H: Loggable, +T <: LogBuilder](head: H, tail: T) extends L
 }
 
 sealed trait End extends LogBuilder {
-  def :+:[H: Loggable](h: H): H :+: End = com.logless.:+:(h, this)
+  def :+:[H: Loggable](h: H): H :+: End = builder.:+:(h, this)
 
   override protected[logless] def asList: List[String] = Nil
 }

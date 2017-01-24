@@ -11,7 +11,7 @@ class LoggerTest extends WordSpecLike with MustMatchers {
   "Logger" must {
 
     "add enclosing class & method name to logging message if 'showSource' enabled" in {
-      val sourceLogger = Logger(ScalaLogger("test logger"), showSource = true)
+      val sourceLogger = SourceLogger(ScalaLogger("test logger"), showSource = true)
 
       val message = "Simple logging message"
 
@@ -27,7 +27,7 @@ class LoggerTest extends WordSpecLike with MustMatchers {
     }
 
     "return message as is if 'showSource' disabled" in {
-      val logger = Logger(ScalaLogger("test logger"), showSource = false)
+      val logger = SourceLogger(ScalaLogger("test logger"), showSource = false)
 
       val message = "Simple logging message"
 
@@ -43,27 +43,27 @@ class LoggerTest extends WordSpecLike with MustMatchers {
     }
   }
 
-  def fakeMethod(logger: Logger, message: String): String = {
+  def fakeMethod(logger: SourceLogger, message: String): String = {
     def fakeMethod0(message: String): String =
       logger withSource message
 
     fakeMethod0(message)
   }
 
-  def lambda(logger: Logger, message: String): String = {
+  def lambda(logger: SourceLogger, message: String): String = {
     Some("x").map(r => logger.withSource(message)).get
   }
 
   class FakeClass {
 
-    def method(logger: Logger, message: String): String =
+    def method(logger: SourceLogger, message: String): String =
       logger withSource message
 
-    def lambda(logger: Logger, message: String): String = {
+    def lambda(logger: SourceLogger, message: String): String = {
       Some("x").map(r => logger.withSource(message)).get
     }
 
-    def forComprehension(logger: Logger, message: String): String =
+    def forComprehension(logger: SourceLogger, message: String): String =
       (for {
         _ <- Some("x")
       } yield logger.withSource(message)).get

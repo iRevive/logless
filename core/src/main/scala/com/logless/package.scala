@@ -1,5 +1,7 @@
 package com
 
+import com.logless.builder._
+
 import scala.language.implicitConversions
 
 /**

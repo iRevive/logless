@@ -7,20 +7,20 @@ import org.slf4j.LoggerFactory
   */
 trait LazyLogging {
 
-  protected lazy val sourceLogger: Logger =
-    Logger(LoggerFactory.getLogger(getClass.getName), showSource = true)
+  protected lazy val sourceLogger: SourceLogger =
+    SourceLogger(LoggerFactory.getLogger(getClass.getName), showSource = true)
 
-  protected lazy val logger: Logger =
-    Logger(LoggerFactory.getLogger(getClass.getName), showSource = false)
+  protected lazy val logger: SourceLogger =
+    SourceLogger(LoggerFactory.getLogger(getClass.getName), showSource = false)
 
 }
 
 trait StrictLogging {
 
-  protected val sourceLogger: Logger =
-    Logger(LoggerFactory.getLogger(getClass.getName), showSource = true)
+  protected val sourceLogger: SourceLogger =
+    SourceLogger(LoggerFactory.getLogger(getClass.getName), showSource = true)
 
-  protected val logger: Logger =
-    Logger(LoggerFactory.getLogger(getClass.getName), showSource = false)
+  protected val logger: SourceLogger =
+    SourceLogger(LoggerFactory.getLogger(getClass.getName), showSource = false)
 
 }

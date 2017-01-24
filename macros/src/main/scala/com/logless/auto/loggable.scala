@@ -35,7 +35,7 @@ final class loggable extends StaticAnnotation {
           Lit("")
 
         case (typ, name) :: Nil =>
-          q"_root_.com.logless.Loggable[$typ].present(value.$name)"
+          q"_root_.com.logless.builder.Loggable[$typ].present(value.$name)"
 
         case other =>
           val chain = other
@@ -55,8 +55,8 @@ final class loggable extends StaticAnnotation {
         )
 
       q"""
-          implicit val loggable: _root_.com.logless.Loggable[$className] =
-            _root_.com.logless.Loggable.presents[$className] { value =>
+          implicit val loggable: _root_.com.logless.builder.Loggable[$className] =
+            _root_.com.logless.builder.Loggable.presents[$className] { value =>
               import _root_.com.logless._
 
               $replace

@@ -1,4 +1,4 @@
-package com.logless
+package com.logless.builder
 
 import scala.language.higherKinds
 
