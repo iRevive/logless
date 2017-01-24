@@ -5,6 +5,7 @@ val buildSettings = Defaults.coreDefaultSettings ++ Seq(
   sources in(Compile, doc) := Seq.empty,
   publishArtifact in(Compile, packageDoc) := false,
   resolvers += Resolvers.scalaMeta,
+  licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
   addCompilerPlugin(Library.scalaMetaParadise)
 )
 
@@ -26,3 +27,7 @@ lazy val core = Project(
   )
 ).aggregate(macros).dependsOn(macros)
 
+lazy val root = project.in(file("."))
+  .settings(buildSettings ++ Seq(
+    name := "logless"
+  ))
