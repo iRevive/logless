@@ -1,5 +1,7 @@
 ## Yet another logging tool.
 
+![Bintray](https://img.shields.io/bintray/v/irevive/maven/logless.svg)
+
 #### Usage:
 
 ```scala
