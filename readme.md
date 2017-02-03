@@ -1,18 +1,18 @@
-## Yet another logging tool.
+# Yet another logging tool. ![Bintray](https://img.shields.io/bintray/v/irevive/maven/logless.svg)
 
-#### Installation:
+## Installation:
 
 ```
 resolvers ++= Resolver.bintrayRepo("irevive", "maven")
 
-libraryDependencies += "io.github.irevive" %% "logless" % "0.1.1"
+libraryDependencies += "io.github.irevive" %% "logless" % version
 ```
 
-#### Loggers
+## Loggers
 Library provides 2 loggers: SourceLogger and TraceLogger.
 By default loggers defined at the `LazyLogging` and `StrictLogging` traits.
 
-###### TraceLogger
+##### TraceLogger
 TraceLogger prepends log message with the trace id. Trace ID can be passed implicitly.
 
 Example:
@@ -28,12 +28,12 @@ class Service extends LazyLogging {
 
 ```
 
-###### SourceLogger
+##### SourceLogger
 Source logger prints location (class name and method name) of the method call.  
 SourceLogger supports irace id too.
 
 Example:
-#### Usage:
+## Usage:
 
 ```scala
 case class Entity(id: Int, userName: String)
@@ -53,7 +53,7 @@ class Service extends LazyLogging {
 }
 ```
 
-#### LogBuilder
+## LogBuilder
 LogBuilder allows to build a log message from multiple elements.
 LogBuilder requires an implicit `Loggable[A]` instance for each element.
 Elements are separated by a comma.
@@ -76,7 +76,7 @@ TraceLogger(this.getClass).info("My log message: {}", user :+: device)
 //prints: 'My log message: User(Paolo, Columbus), Device(identifier, device name)'
 ```
 
-#### Macro generation
+## Macro generation
 Loggable instance can be generated via macro-annotation `@loggable` .  
 `@exclude` used to ignore case class field.  
 `@include` used to add non case class primary fields. `val`, `var` and `def` without arguments are supported.
