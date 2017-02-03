@@ -1,5 +1,6 @@
 val buildSettings = Defaults.coreDefaultSettings ++ Seq(
-  version := "0.1",
+  organization := "io.github.irevive",
+  version := "0.1.1",
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-encoding", "UTF-8", "-Xplugin-require:macroparadise"),
   scalaVersion := Version.scala,
   sources in(Compile, doc) := Seq.empty,
@@ -31,3 +32,5 @@ lazy val root = project.in(file("."))
   .settings(buildSettings ++ Seq(
     name := "logless"
   ))
+  .aggregate(macros, core)
+  .dependsOn(macros, core)

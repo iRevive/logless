@@ -12,28 +12,28 @@ import scala.reflect.ClassTag
   */
 object SourceLogger {
 
-  def apply(scalaLogger: ScalaLogger, showSource: Boolean): SourceLogger =
-    new SourceLogger(TraceLogger(scalaLogger), showSource)
+  def apply(scalaLogger: ScalaLogger): SourceLogger =
+    new SourceLogger(TraceLogger(scalaLogger))
 
-  def apply(traceLogger: TraceLogger, showSource: Boolean): SourceLogger =
-    new SourceLogger(traceLogger, showSource)
+  def apply(traceLogger: TraceLogger): SourceLogger =
+    new SourceLogger(traceLogger)
 
-  def apply(underlying: Underlying, showSource: Boolean): SourceLogger =
-    new SourceLogger(TraceLogger(underlying), showSource)
+  def apply(underlying: Underlying): SourceLogger =
+    new SourceLogger(TraceLogger(underlying))
 
-  def apply(name: String, showSource: Boolean): SourceLogger =
-    new SourceLogger(TraceLogger(name), showSource)
+  def apply(name: String): SourceLogger =
+    new SourceLogger(TraceLogger(name))
 
-  def apply(clazz: Class[_], showSource: Boolean): SourceLogger =
-    new SourceLogger(TraceLogger(clazz), showSource)
+  def apply(clazz: Class[_]): SourceLogger =
+    new SourceLogger(TraceLogger(clazz))
 
   def apply[T](showSource: Boolean)(implicit ct: ClassTag[T]): SourceLogger =
-    new SourceLogger(TraceLogger(ScalaLogger(ct)), showSource)
+    new SourceLogger(TraceLogger(ScalaLogger(ct)))
 
 }
 
 @SerialVersionUID(716196318)
-final class SourceLogger private(val underlying: TraceLogger, val showSource: Boolean) extends Serializable {
+final class SourceLogger private(val underlying: TraceLogger) extends Serializable {
 
   // Error
 
@@ -152,9 +152,8 @@ final class SourceLogger private(val underlying: TraceLogger, val showSource: Bo
 
   private[logless] def withSource(other: String)(implicit source: Source, tracer: TraceIdentifier): String =
     source.enclosingMethod match {
-      case Some(method) if showSource => s"${source.enclosingClass}.$method(...) - $other"
-      case None         if showSource => s"${source.enclosingClass} - $other"
-      case _                          => other
+      case Some(method) => s"${source.enclosingClass}.$method(...) - $other"
+      case None         => s"${source.enclosingClass} - $other"
     }
 
 }

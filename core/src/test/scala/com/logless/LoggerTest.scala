@@ -11,7 +11,7 @@ class LoggerTest extends WordSpecLike with MustMatchers {
   "Logger" must {
 
     "add enclosing class & method name to logging message if 'showSource' enabled" in {
-      val sourceLogger = SourceLogger(ScalaLogger("test logger"), showSource = true)
+      val sourceLogger = SourceLogger(ScalaLogger("test logger"))
 
       val message = "Simple logging message"
 
@@ -26,21 +26,6 @@ class LoggerTest extends WordSpecLike with MustMatchers {
       new FakeClass().forComprehension(sourceLogger, message) mustBe s"FakeClass.forComprehension(...) - $message"
     }
 
-    "return message as is if 'showSource' disabled" in {
-      val logger = SourceLogger(ScalaLogger("test logger"), showSource = false)
-
-      val message = "Simple logging message"
-
-      fakeMethod(logger, message) mustBe message
-
-      new FakeClass().method(logger, message) mustBe message
-
-      lambda(logger, message) mustBe message
-
-      new FakeClass().lambda(logger, message) mustBe message
-
-      new FakeClass().forComprehension(logger, message) mustBe message
-    }
   }
 
   def fakeMethod(logger: SourceLogger, message: String): String = {
