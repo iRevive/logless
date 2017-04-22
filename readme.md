@@ -21,8 +21,8 @@ Example:
 class Service extends LazyLogging {
 
   def find(name: String)(implicit traceId: TraceID): Unit = {
-    sourceLogger.debug("Searching entity with name [{}]", name)
-    //prints: '[820d8ce6-4465-4d49-aa19-192aa557b428]: Service.find(...) - Searching entity with name [name]'
+    traceLogger.debug("Searching entity with name [{}]", name)
+    //prints: '[820d8ce6-4465-4d49-aa19-192aa557b428]: Searching entity with name [name]'
   }
 
 }
@@ -34,6 +34,18 @@ Source logger prints location (class name and method name) of the method call.
 SourceLogger supports trace id too.
 
 Example:
+```scala
+class Service extends LazyLogging {
+
+  def find(name: String)(implicit traceId: TraceID): Unit = {
+    sourceLogger.debug("Searching entity with name [{}]", name)
+    //prints: '[820d8ce6-4465-4d49-aa19-192aa557b428]: Service.find(...) - Searching entity with name [name]'
+  }
+
+}
+
+```
+
 ## Usage:
 
 ```scala
