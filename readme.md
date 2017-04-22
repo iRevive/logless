@@ -1,4 +1,4 @@
-# Yet another logging tool. 
+# Yet another logging tool
 ![Bintray](https://img.shields.io/bintray/v/irevive/maven/logless.svg)
 
 ## Installation:
@@ -22,7 +22,7 @@ class Service extends LazyLogging {
 
   def find(name: String)(implicit traceId: TraceID): Unit = {
     sourceLogger.debug("Searching entity with name [{}]", name)
-    //prints: '[820d8ce6-4465-4d49-aa19-192aa557b428]: Searching entity with name [name value]'
+    //prints: '[820d8ce6-4465-4d49-aa19-192aa557b428]: Service.find(...) - Searching entity with name [name]'
   }
 
 }
