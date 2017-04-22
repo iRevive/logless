@@ -31,7 +31,7 @@ class Service extends LazyLogging {
 
 ##### SourceLogger
 Source logger prints location (class name and method name) of the method call.  
-SourceLogger supports irace id too.
+SourceLogger supports trace id too.
 
 Example:
 ## Usage:
