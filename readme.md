@@ -1,4 +1,5 @@
-# Yet another logging tool. ![Bintray](https://img.shields.io/bintray/v/irevive/maven/macrolog.svg)
+# Yet another logging tool
+![Bintray](https://img.shields.io/bintray/v/irevive/maven/logless.svg)
 
 ### Summary
 Main idea behind this library to provide a type-safe way to log entities.  
