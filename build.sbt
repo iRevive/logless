@@ -1,36 +1,61 @@
-val buildSettings = Defaults.coreDefaultSettings ++ Seq(
-  organization := "io.github.irevive",
-  version := "0.1.1",
-  scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-encoding", "UTF-8", "-Xplugin-require:macroparadise"),
+import sbt.Keys.organization
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
+import _root_.bintray.BintrayKeys._
+
+lazy val root = (project in file("."))
+  .settings(commonSettings: _*)
+  .settings(releaseSettings: _*)
+  .settings(
+    name := Settings.name,
+    libraryDependencies ++= Dependencies.root
+  )
+  .aggregate(macros)
+  .dependsOn(macros)
+
+lazy val macros = (project in file("macros"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := s"${Settings.name}-macros",
+    libraryDependencies ++= Dependencies.macros
+  )
+
+lazy val commonSettings = Seq(
+  organization := Settings.organization,
   scalaVersion := Version.scala,
-  sources in(Compile, doc) := Seq.empty,
-  publishArtifact in(Compile, packageDoc) := false,
-  resolvers += Resolvers.scalaMeta,
+
+  resolvers ++= List(Resolvers.scalaMeta, Resolver.sonatypeRepo("releases")),
+
+  scalacOptions ++= Seq(
+    "-unchecked",
+    "-deprecation",
+    "-feature",
+    "-encoding", "UTF-8",
+    "-Xplugin-require:macroparadise",
+    "-Ywarn-dead-code",
+    "-Ywarn-inaccessible",
+    "-Ywarn-unused",
+    "-Ywarn-unused-import"
+  ),
+
   licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
   addCompilerPlugin(Library.scalaMetaParadise)
 )
 
-lazy val macros = Project(
-  "macros",
-  file("macros"),
-  settings = buildSettings ++ Seq(
-    name := "logless-macros",
-    libraryDependencies ++= Dependencies.loglessMacro
+
+lazy val releaseSettings = Seq(
+  releaseVersionBump := sbtrelease.Version.Bump.Next,
+
+  releaseProcess := Seq[ReleaseStep](
+    checkSnapshotDependencies,
+    inquireVersions,
+    runTest,
+    setReleaseVersion,
+    commitReleaseVersion,
+    tagRelease,
+    publishArtifacts,
+    ReleaseStep(releaseStepTask(publish in bintray)),
+    setNextVersion,
+    commitNextVersion,
+    pushChanges
   )
 )
-
-lazy val core = Project(
-  "core",
-  file("core"),
-  settings = buildSettings ++ Seq(
-    name := "logless-core",
-    libraryDependencies ++= Dependencies.logless
-  )
-).aggregate(macros).dependsOn(macros)
-
-lazy val root = project.in(file("."))
-  .settings(buildSettings ++ Seq(
-    name := "logless"
-  ))
-  .aggregate(macros, core)
-  .dependsOn(macros, core)

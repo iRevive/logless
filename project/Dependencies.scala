@@ -1,40 +1,48 @@
 import sbt._
 
+object Settings {
+  val organization          = "io.github.irevive"
+  val name                  = "macrolog"
+}
+
 object Version {
-  val scala             = "2.11.8"
-  val scalaTest         = "3.0.0"
-  val scalaMeta         = "1.4.0.558"
-  val scalaMetaParadise = "3.0.0.140"
-  val scalaLogging      = "3.5.0"
-  val config            = "1.3.1"
+  val scala                 = "2.12.1"
+
+  val scalaLogging          = "3.5.0"
+  val scalaTest             = "3.0.0"
+  val simulacrum            = "0.10.0"
+  val cats                  = "0.9.0"
+  val logback               = "1.2.3"
+
+  val scalaMeta             = "1.8.0"
+  val scalaMetaParadise     = "3.0.0-M7"
 }
 
 object Resolvers {
   val scalaMeta = Resolver.url("scalameta", url("http://dl.bintray.com/scalameta/maven"))(Resolver.ivyStylePatterns)
+  val irevive   = Resolver.url("irevive", url("http://dl.bintray.com/irevive/maven"))(Resolver.ivyStylePatterns)
 }
 
 object Library {
-  val scalaReflect          = "org.scala-lang"              % "scala-reflect"    % Version.scala
-  val scalaTest             = "org.scalatest"               %% "scalatest"       % Version.scalaTest
-  val scalaMeta             = "org.scalameta"               % "scalameta_2.11"   % Version.scalaMeta
-  val scalaMetaParadise     = "org.scalameta"               % "paradise_2.11.8"  % Version.scalaMetaParadise
-  val scalaLogging          = "com.typesafe.scala-logging"  %% "scala-logging"   % Version.scalaLogging
-  val config                = "com.typesafe"                % "config"           % Version.config
+  val scalaReflect          = "org.scala-lang" % "scala-reflect" % Version.scala
+  val scalaMeta             = "org.scalameta"  %% "scalameta"    % Version.scalaMeta
+  val scalaMetaParadise     = "org.scalameta"  % "paradise"      % Version.scalaMetaParadise cross CrossVersion.full
 }
 
 object Dependencies {
   import Library._
 
-  val loglessMacro = List(
+  val macros = List(
     scalaReflect,
-    scalaMeta,
-    config
+    scalaMeta
   )
 
-  val logless = List(
-    scalaLogging,
-
-    scalaTest % "test"
+  val root = Seq(
+    "com.typesafe.scala-logging"  %% "scala-logging"   % Version.scalaLogging,
+    "com.github.mpilquist"        %% "simulacrum"      % Version.simulacrum,
+    "org.typelevel"               %% "cats"            % Version.cats,
+    "ch.qos.logback"              % "logback-classic"  % Version.logback,
+    "org.scalatest"               %% "scalatest"       % Version.scalaTest    % Test
   )
 
 }
