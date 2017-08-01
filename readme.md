@@ -1,5 +1,5 @@
 # Yet another logging tool
-![Bintray](https://img.shields.io/bintray/v/irevive/maven/logless.svg)
+![Bintray](https://img.shields.io/bintray/v/irevive/maven/macrolog.svg)
 
 ## Summary
 Main idea behind this library to provide a type-safe way to log entities.  
@@ -59,7 +59,47 @@ val safeLogStatement = {
 }
 ```
 
-## How to add TraceQualifier and Position at the log message.
+## How to add TraceQualifier and Position to the log message
+Position and TraceId always calculated at the compile time. This library works without reflection
+and has a zero overhead. 
+
+#### Position set-up
+It's not necessary to provide Position implicitly. A value automatically calculated at the compile time.   
+If you want to log higher level of the call chain, just provide it implicitly to the method:  
+```scala
+def method(implicit pos: macrolog.auto.Pos): Unit = {
+  logger.info("My log message")
+}
+```  
+
+#### TraceId set-up
+TraceId must be always specified as an implicit parameter of the method:  
+```scala
+def method1(implicit traceId: macrolog.TraceId): Unit = {
+  logger.info("My log message 1")
+}
+  
+def method2(implicit traceId: macrolog.TraceId): Unit = {
+  logger.info("My log message 2")
+}
+  
+def method3(implicit traceId: macrolog.TraceId): Unit = {
+  logger.info("My log message 3")
+}
+```
+
+Just generate a new traceId on the top of the calls chain:
+```scala
+def entryPoint(): Unit = {
+  implicit val traceId = macrolog.TraceId()
+  
+  method1()
+  method2()
+  method3()
+}
+```
+
+#### Logback config
 Add conversion rules `traceId` and `position` to the `logback.xml` configuration.
 ```xml
 <conversionRule conversionWord="traceId" converterClass="macrolog.TraceQualifierConverter"/>
