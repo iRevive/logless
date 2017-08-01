@@ -80,7 +80,7 @@ class loggable extends StaticAnnotation {
     }
 
     def trace(s: => String): Unit = {
-      if (true) logger.debug(s)
+      if (sys.props.get("macrolog.auto.trace").isDefined) logger.debug(s)
     }
 
     defn match {
