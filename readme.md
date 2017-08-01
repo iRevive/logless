@@ -1,7 +1,7 @@
 # Yet another logging tool
 ![Bintray](https://img.shields.io/bintray/v/irevive/maven/logless.svg)
 
-### Summary
+## Summary
 Main idea behind this library to provide a type-safe way to log entities.  
 There are only two type classes:  
 1) `macrolog.Loggable` - presents type A as string
@@ -9,7 +9,8 @@ There are only two type classes:
 
 Library built on top of [scala-logging](https://github.com/typesafehub/scala-logging)
 
-### Installation:
+
+## Installation:
 
 ```
 resolvers ++= Resolver.bintrayRepo("irevive", "maven")
@@ -17,7 +18,7 @@ resolvers ++= Resolver.bintrayRepo("irevive", "maven")
 libraryDependencies += "io.github.irevive" %% "macrolog" % version
 ```
 
-### Logger
+## Logger
 The logger defined at the `LazyLogging` and `StrictLogging` traits.
 
 Example:
@@ -31,7 +32,7 @@ class Service extends StrictLogging {
 }
 ```
 
-### Type-safe logging
+## Type-safe logging
 `log` prefix will generate a type-safe string using `Loggable` instance for each argument of the string interpolation.  
 
 Example:  
@@ -58,7 +59,7 @@ val safeLogStatement = {
 }
 ```
 
-### How to add TraceQualifier and Position at the log message.
+## How to add TraceQualifier and Position at the log message.
 Add conversion rules `traceId` and `position` to the `logback.xml` configuration.
 ```xml
 <conversionRule conversionWord="traceId" converterClass="macrolog.TraceQualifierConverter"/>
@@ -77,7 +78,8 @@ After that you can use them in the appender pattern:
 The output will be:  
 `2017-08-01 16:21:51,879 thread1 e12585zd-b81a-4e61-8933-7ccb530d07f2e com.example.Bootrstap.start:47 - Application started successfully`
 
-### Macro generation
+  
+## Macro generation
 Loggable and LogSchema instances can be generated via macro-annotation `@loggable`.  
 `@loggable.exclude` used to ignore case class field.  
 `@loggable.include` used to add non case class primary fields. `val`, `var` and `def` without arguments are supported.  

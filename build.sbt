@@ -52,7 +52,6 @@ lazy val releaseSettings = Seq(
     commitReleaseVersion,
     tagRelease,
     publishArtifacts,
-    ReleaseStep(releaseStepTask(publish in bintray)),
     setNextVersion,
     commitNextVersion,
     pushChanges
