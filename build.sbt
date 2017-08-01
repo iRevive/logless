@@ -1,6 +1,5 @@
 import sbt.Keys.organization
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
-import _root_.bintray.BintrayKeys._
 
 lazy val root = (project in file("."))
   .settings(commonSettings: _*)
