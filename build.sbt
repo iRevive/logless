@@ -1,5 +1,4 @@
 import sbt.Keys.organization
-import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
 lazy val root = (project in file("."))
   .settings(commonSettings: _*)
@@ -24,6 +23,8 @@ lazy val commonSettings = Seq(
 
   resolvers ++= List(Resolvers.scalaMeta, Resolver.sonatypeRepo("releases")),
 
+  //crossScalaVersions := Seq("2.11.11", "2.12.3"),
+
   scalacOptions ++= Seq(
     "-unchecked",
     "-deprecation",
@@ -42,18 +43,6 @@ lazy val commonSettings = Seq(
 
 
 lazy val releaseSettings = Seq(
-  releaseVersionBump := sbtrelease.Version.Bump.Next,
-
-  releaseProcess := Seq[ReleaseStep](
-    checkSnapshotDependencies,
-    inquireVersions,
-    runTest,
-    setReleaseVersion,
-    commitReleaseVersion,
-    tagRelease,
-    publishArtifacts,
-    setNextVersion,
-    commitNextVersion,
-    pushChanges
-  )
+  sources in(Compile, doc) := Seq.empty,
+  publishArtifact in(Compile, packageDoc) := false
 )

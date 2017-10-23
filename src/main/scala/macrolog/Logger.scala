@@ -32,42 +32,42 @@ object Logger {
 final class Logger private(val underlying: ScalaLogger) extends Serializable {
 
   // Error
-  def error(message: String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.error(message))
+  def error(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.error(message, LoggingMetadata(tracer, pos))
 
-  def error(message: String, cause: Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.error(message, cause))
+  def error(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.error(message, LoggingMetadata(tracer, pos), cause)
 
   // Warn
 
-  def warn(message: String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.warn(message))
+  def warn(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.warn(message, LoggingMetadata(tracer, pos))
 
-  def warn(message: String, cause: Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.warn(message, cause))
+  def warn(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.warn(message, LoggingMetadata(tracer, pos), cause)
 
   // Info
 
-  def info(message: String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.info(message))
+  def info(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.info(message, LoggingMetadata(tracer, pos))
 
-  def info(message: String, cause: Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.info(message, cause))
+  def info(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.info(message, LoggingMetadata(tracer, pos), cause)
 
   // Debug
 
-  def debug(message: String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.debug(message))
+  def debug(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.debug(message, LoggingMetadata(tracer, pos))
 
-  def debug(message: String, cause: Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.debug(message, cause))
+  def debug(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.debug(message, LoggingMetadata(tracer, pos), cause)
 
   // Trace
 
-  def trace(message: String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.trace(message))
+  def trace(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.trace(message, LoggingMetadata(tracer, pos))
 
-  def trace(message: String, cause: Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    LoggingMeta.withMeta(underlying.trace(message, cause))
+  def trace(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
+    underlying.trace(message, LoggingMetadata(tracer, pos), cause)
 
 }

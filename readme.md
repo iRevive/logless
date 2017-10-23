@@ -1,5 +1,5 @@
 # Yet another logging tool
-![Bintray](https://img.shields.io/bintray/v/irevive/maven/macrolog.svg)
+[![Download](https://api.bintray.com/packages/irevive/maven/macrolog/images/download.svg) ](https://bintray.com/irevive/maven/macrolog/_latestVersion)
 
 ## Summary
 Main idea behind this library to provide a type-safe way to log entities.  

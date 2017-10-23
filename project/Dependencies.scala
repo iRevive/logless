@@ -15,7 +15,7 @@ object Version {
   val logback               = "1.2.3"
 
   val scalaMeta             = "1.8.0"
-  val scalaMetaParadise     = "3.0.0-M7"
+  val scalaMetaParadise     = "3.0.0-M8"
 }
 
 object Resolvers {

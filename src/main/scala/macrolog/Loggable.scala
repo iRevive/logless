@@ -25,7 +25,9 @@ trait Loggable[A] {
 
 object Loggable extends LoggableInstances {
 
-  def instance[A](op: A => String): Loggable[A] = (value: A) => op(value)
+  def instance[A](op: A => String): Loggable[A] = new Loggable[A] {
+    override def print(value: A): String = op(value)
+  }
 
 }
 
