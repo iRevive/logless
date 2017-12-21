@@ -26,7 +26,7 @@ Example:
 class Service extends StrictLogging {
 
   def find(name: String)(implicit traceId: TraceId): Unit = {
-    logger.debug("Searching entity with name [{}]", name)
+    logger.debug(s"Searching entity with name [$name]")
   }
 
 }
