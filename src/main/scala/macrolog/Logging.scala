@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 /**
  * @author Maksim Ochenashko
  */
-sealed trait LoggingOps extends LogStringContextConversion
+sealed trait LoggingOps extends LogStringContextConversion with HighPriority
 
 trait LazyLogging extends LoggingOps {
 

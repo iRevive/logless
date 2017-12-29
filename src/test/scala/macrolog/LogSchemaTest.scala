@@ -6,7 +6,7 @@ import org.scalatest.{MustMatchers, WordSpecLike}
 /**
  * @author Maksim Ochenashko
  */
-class LogSchemaSpec extends WordSpecLike with MustMatchers {
+class LogSchemaTest extends WordSpecLike with MustMatchers {
 
   "LogSchema" should {
 
@@ -15,16 +15,16 @@ class LogSchemaSpec extends WordSpecLike with MustMatchers {
 
       val instance = CustomObject("myPropertyA", 1001)
 
-      implicit val logSchema =
+      val logSchema =
         new LogSchema[CustomObject] {
-          override def schema(value: CustomObject): List[(String, String)] =
-            List(
+          override def schema(value: CustomObject): Map[String, String] =
+            Map(
               "propertyA" -> value.propertyA,
               "propertyB" -> value.propertyB.toString
             )
         }
 
-      logSchema.schema(instance) mustBe List("propertyA" -> "myPropertyA", "propertyB" -> "1001")
+      logSchema.schema(instance) mustBe Map("propertyA" -> "myPropertyA", "propertyB" -> "1001")
     }
 
     "generate LogSchema and Loggable instance via @logging.schema macros" in {
@@ -33,7 +33,7 @@ class LogSchemaSpec extends WordSpecLike with MustMatchers {
 
       val instance = CustomObject("myPropertyA", 1001, "prop3")
 
-      LogSchema[CustomObject].schema(instance) mustBe List("propertyA" -> "myPropertyA", "propertyB" -> "1001")
+      LogSchema[CustomObject].schema(instance) mustBe Map("propertyA" -> "myPropertyA", "propertyB" -> "1001")
       Loggable[CustomObject].print(instance) mustBe "CustomObject(propertyA = myPropertyA, propertyB = 1001)"
     }
 
@@ -51,11 +51,11 @@ class LogSchemaSpec extends WordSpecLike with MustMatchers {
 
       val instance = Test(1, "value")
 
-      val expectedList = List("a" -> "1", "b" -> "value", "name" -> "name value", "nestedProp" -> "14.01")
+      val expectedMap = Map("a" -> "1", "b" -> "value", "name" -> "name value", "nestedProp" -> "14.01")
 
-      LogSchema[Test].schema(instance) mustBe expectedList
+      LogSchema[Test].schema(instance) mustBe expectedMap
 
-      val body = expectedList.map { case (prop, v) => s"$prop = $v" }.mkString(", ")
+      val body = expectedMap.map { case (prop, v) => s"$prop = $v" }.mkString(", ")
 
       Loggable[Test].print(instance) mustBe s"Test($body)"
     }

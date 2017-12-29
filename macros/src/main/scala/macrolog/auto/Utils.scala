@@ -11,6 +11,11 @@ private[auto] object Utils {
   case class Param(mods: Seq[Mod], originalType: Type, name: Term.Name, customName: Option[Term])
 
   def extractParams(defn: Stat, ctorParamss: Seq[Seq[Term.Param]], stats: Option[Seq[Stat]]): Seq[Param] = {
+    val constructorParamAccessibleByDefault = defn match {
+      case c: Defn.Class if !isCaseClass(c.mods) => false
+      case _                                     => true
+    }
+
     def isIncluded(mods: Seq[Mod]): Boolean = isAnnotated(mods, "loggable", "include")
 
     def isExcluded(mods: Seq[Mod]): Boolean = isAnnotated(mods, "loggable", "exclude")
@@ -20,7 +25,7 @@ private[auto] object Utils {
     val ctorParams =
       for {
         param <- ctorParamss.flatten.toList
-        if applicableParam(param) && !isExcluded(param.mods)
+        if applicableParam(param, constructorParamAccessibleByDefault) && !isExcluded(param.mods)
       } yield Param(param.mods, extractParamType(param), Term.Name(param.name.value), named(param.mods))
 
     val templateParams =
@@ -66,13 +71,19 @@ private[auto] object Utils {
       case _                                                                      => false
     }
 
+  def isCaseClass(mods: Seq[Mod]): Boolean =
+    mods exists {
+      case Mod.Case() => true
+      case _          => false
+    }
+
   def annotationValue(mods: Seq[Mod], prefix: String, name: String): Option[Term] =
     mods collectFirst {
       case Mod.Annot(Term.Apply(Ctor.Ref.Select(Term.Name(`prefix`), Ctor.Ref.Name(`name`)), Seq(value: Term))) => value
     }
 
-  private def applicableParam(param: Term.Param): Boolean =
-    param.mods forall modifierMatcher
+  private def applicableParam(param: Term.Param, constructorParamAccessibleByDefault: Boolean): Boolean =
+    param.mods.forall(modifierMatcher) && (constructorParamAccessibleByDefault || param.mods.exists(valOrVarModifier))
 
   private def applicableDeclaration(v: Declaration): Boolean =
     v.decltpe.nonEmpty && v.mods.forall(modifierMatcher)
@@ -84,6 +95,12 @@ private[auto] object Utils {
     case Mod.Private(_: Term.This)   => false
     case Mod.Protected(_: Term.This) => false
     case _                           => true
+  }
+
+  private val valOrVarModifier: Mod => Boolean = {
+    case Mod.VarParam() => true
+    case Mod.ValParam() => true
+    case _              => false
   }
 
 }

@@ -2,6 +2,7 @@ package macrolog
 
 import java.util.UUID
 
+import macrolog.auto.Position
 import simulacrum.typeclass
 
 import scala.annotation.implicitNotFound
@@ -33,6 +34,8 @@ object Loggable extends LoggableInstances {
 
 trait LoggableInstances {
 
+  import Loggable.ops._
+
   implicit val stringLoggable   : Loggable[String]     = Loggable.instance(identity)
   implicit val intLoggable      : Loggable[Int]        = toStringLoggable
   implicit val longLoggable     : Loggable[Long]       = toStringLoggable
@@ -40,6 +43,8 @@ trait LoggableInstances {
   implicit val floatLoggable    : Loggable[Float]      = toStringLoggable
   implicit val booleanLoggable  : Loggable[Boolean]    = toStringLoggable
   implicit val uuidLoggable     : Loggable[UUID]       = toStringLoggable
+
+  implicit val posLoggable      : Loggable[Position]   = Loggable.instance(v => s"Pos(${v.fullPosition})")
 
   implicit val throwableLoggable: Loggable[Throwable] =
     Loggable instance { throwable =>
@@ -64,18 +69,28 @@ trait LoggableInstances {
 
   implicit def optionLoggable[A: Loggable]: Loggable[Option[A]] =
     Loggable instance { value =>
-      value.fold("None")(Loggable[A].print)
+      value.fold("None")(v => s"Some(${v.print})")
     }
 
   implicit def tuple2[A: Loggable, B: Loggable]: Loggable[(A, B)] =
-    Loggable instance {
-      case (left, right) => s"(${Loggable[A].print(left)}, ${Loggable[B].print(right)})"
+    Loggable instance { case (first, second) =>
+      s"(${first.print}, ${second.print})"
+    }
+
+  implicit def tuple3[A: Loggable, B: Loggable, C: Loggable]: Loggable[(A, B, C)] =
+    Loggable instance { case (first, second, third) =>
+      s"(${first.print}, ${second.print}, ${third.print})"
+    }
+
+  implicit def tuple4[A: Loggable, B: Loggable, C: Loggable, D: Loggable]: Loggable[(A, B, C, D)] =
+    Loggable instance { case (first, second, third, fourth) =>
+      s"(${first.print}, ${second.print}, ${third.print}, ${fourth.print})"
     }
 
   implicit def eitherLoggable[A: Loggable, B: Loggable]: Loggable[Either[A, B]] =
     Loggable instance {
-      case Left(value)  => s"Left(${Loggable[A].print(value)})"
-      case Right(value) => s"Right(${Loggable[B].print(value)})"
+      case Left(value)  => s"Left(${value.print})"
+      case Right(value) => s"Right(${value.print})"
     }
 
   def toStringLoggable[A]: Loggable[A] =

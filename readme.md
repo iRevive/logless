@@ -1,6 +1,8 @@
-# Yet another logging tool
+# Macrolog
 [![Download](https://api.bintray.com/packages/irevive/maven/macrolog/images/download.svg) ](https://bintray.com/irevive/maven/macrolog/_latestVersion)
 
+Macrolog provides a type-safe way to log entities.
+ 
 ## Summary
 Main idea behind this library to provide a type-safe way to log entities.  
 There are only two type classes:  
@@ -18,14 +20,14 @@ resolvers ++= Resolver.bintrayRepo("irevive", "maven")
 libraryDependencies += "io.github.irevive" %% "macrolog" % version
 ```
 
-## Logger
-The logger defined at the `LazyLogging` and `StrictLogging` traits.
+## Usage
+The logger defined at `LazyLogging` and `StrictLogging` traits.
 
 Example:
 ```scala
 class Service extends StrictLogging {
 
-  def find(name: String)(implicit traceId: TraceId): Unit = {
+  def find(name: String)(implicit macrolog.traceId: TraceId): Unit = {
     logger.debug(s"Searching entity with name [$name]")
   }
 
@@ -96,6 +98,22 @@ def entryPoint(): Unit = {
   method1()
   method2()
   method3()
+}
+```
+
+#### Custom LoggingContext
+```scala
+case class CustomLoggingContext(user: String, 
+                                timestamp: LocalDateTime, 
+                                module: String,
+                                traceQualifier: macrolog.TraceId,
+                                position: macrolog.auto.Position) 
+  extends macrolog.TraceQualifierLoggingContext 
+    with macrolog.PositionLoggingContext {
+                                
+  override def withPosition(position: macrolog.auto.Position): this.type with macrolog.PositionLoggingContext = 
+    copy(position = position)
+  
 }
 ```
 

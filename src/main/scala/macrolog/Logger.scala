@@ -1,7 +1,7 @@
 package macrolog
 
 import com.typesafe.scalalogging.{Logger => ScalaLogger}
-import macrolog.auto.Pos
+import macrolog.auto.Position
 import org.slf4j.{Logger => Underlying}
 
 import scala.reflect.ClassTag
@@ -32,42 +32,42 @@ object Logger {
 final class Logger private(val underlying: ScalaLogger) extends Serializable {
 
   // Error
-  def error(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.error(message, LoggingMetadata(tracer, pos))
+  def error(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.error(message, ctx.withPosition(pos))
 
-  def error(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.error(message, LoggingMetadata(tracer, pos), cause)
+  def error(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.error(message, ctx.withPosition(pos), cause)
 
   // Warn
 
-  def warn(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.warn(message, LoggingMetadata(tracer, pos))
+  def warn(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.warn(message, ctx.withPosition(pos))
 
-  def warn(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.warn(message, LoggingMetadata(tracer, pos), cause)
+  def warn(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.warn(message, ctx.withPosition(pos), cause)
 
   // Info
 
-  def info(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.info(message, LoggingMetadata(tracer, pos))
+  def info(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.info(message, ctx.withPosition(pos))
 
-  def info(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.info(message, LoggingMetadata(tracer, pos), cause)
+  def info(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.info(message, ctx.withPosition(pos), cause)
 
   // Debug
 
-  def debug(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.debug(message, LoggingMetadata(tracer, pos))
+  def debug(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.debug(message, ctx.withPosition(pos))
 
-  def debug(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.debug(message, LoggingMetadata(tracer, pos), cause)
+  def debug(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.debug(message, ctx.withPosition(pos), cause)
 
   // Trace
 
-  def trace(message: => String)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.trace(message, LoggingMetadata(tracer, pos))
+  def trace(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.trace(message, ctx.withPosition(pos))
 
-  def trace(message: => String, cause: => Throwable)(implicit tracer: TraceQualifier, pos: Pos): Unit =
-    underlying.trace(message, LoggingMetadata(tracer, pos), cause)
+  def trace(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
+    underlying.trace(message, ctx.withPosition(pos), cause)
 
 }

@@ -7,12 +7,20 @@ import java.util.UUID
  */
 sealed trait TraceQualifier
 
-case class TraceId(id: UUID = UUID.randomUUID()) extends TraceQualifier
-
-case object EmptyId extends TraceQualifier
-
 object TraceQualifier {
 
-  implicit def generate: TraceQualifier = EmptyId
+  trait DefinedTrace extends TraceQualifier {
+
+    def asString: String
+
+  }
+
+  case object NoTraceQualifier extends TraceQualifier
+
+  final case class TraceId(id: UUID = UUID.randomUUID()) extends DefinedTrace {
+
+    override def asString: String = id.toString
+
+  }
 
 }

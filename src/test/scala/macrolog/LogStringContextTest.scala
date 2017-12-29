@@ -1,13 +1,13 @@
 package macrolog
 
-import macrolog.auto.loggable
 import macrolog.LogStringContextConversion._
+import macrolog.auto.loggable
 import org.scalatest.{MustMatchers, WordSpecLike}
 
 /**
  * @author Maksim Ochenashko
  */
-class LogStringContextSpec extends WordSpecLike with MustMatchers {
+class LogStringContextTest extends WordSpecLike with MustMatchers {
 
   "LogStringContext" must {
 

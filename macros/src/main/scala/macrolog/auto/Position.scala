@@ -4,19 +4,17 @@ import scala.annotation.tailrec
 import scala.language.experimental.macros
 
 /**
- * @author Maksim Ochenashko
- */
-sealed trait Position
+  * Inspired by com.lihaoyi.Sourcecode
+  *
+  * @author Maksim Ochenashko
+  */
+case class Position(enclosingClass: String, enclosingMethod: Option[String], fullPosition: String)
 
-case object NoPosition extends Position
+object Position {
 
-case class Pos(enclosingClass: String, enclosingMethod: Option[String], fullPosition: String) extends Position
+  implicit def generate: Position = macro impl
 
-object Pos {
-
-  implicit def generate: Pos = macro impl
-
-  def impl(c: scala.reflect.macros.blackbox.Context): c.Expr[Pos] = {
+  def impl(c: scala.reflect.macros.blackbox.Context): c.Expr[Position] = {
     import c.universe._
 
     val owner = c.internal.enclosingOwner
@@ -48,7 +46,7 @@ object Pos {
       case None    => enclosingClass.get.fullName + ":" + owner.pos.line
     }
 
-    c.Expr[Pos](q"""${c.prefix}($className, $methodName, $fullName)""")
+    c.Expr[macrolog.auto.Position](q"""${c.prefix}($className, $methodName, $fullName)""")
   }
 
 }
