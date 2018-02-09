@@ -5,8 +5,8 @@ import macrolog.auto.loggable
 import org.scalatest.{MustMatchers, WordSpecLike}
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 class LogStringContextTest extends WordSpecLike with MustMatchers {
 
   "LogStringContext" must {

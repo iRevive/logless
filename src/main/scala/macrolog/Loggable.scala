@@ -2,15 +2,14 @@ package macrolog
 
 import java.util.UUID
 
-import macrolog.auto.Position
 import simulacrum.typeclass
 
 import scala.annotation.implicitNotFound
 import scala.language.implicitConversions
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 @implicitNotFound(
   """
  No Loggable found for type ${A}. Try to implement an implicit Loggable[${A}].

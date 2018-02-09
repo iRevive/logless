@@ -6,7 +6,7 @@ object Settings {
 }
 
 object Version {
-  val scala                 = "2.12.1"
+  val scala                 = "2.12.3"
 
   val simulacrum            = "0.10.0"
   val scalaLogging          = "3.5.0"
@@ -16,7 +16,7 @@ object Version {
   val scalamock             = "4.0.0"
 
   val scalameta             = "1.8.0"
-  val scalametaParadise     = "3.0.0-M8"
+  val scalametaParadise     = "3.0.0-M10"
 }
 
 object Resolvers {
@@ -26,19 +26,15 @@ object Resolvers {
 
 object Dependencies {
 
-  val macros = List(
-    "org.scala-lang"              % "scala-reflect"           % Version.scala,
-    "org.scalameta"               %% "scalameta"              % Version.scalameta,
-    "org.scalatest"               %% "scalatest"              % Version.scalatest         % Test,
-    "org.scalameta"               %% "testkit"                % Version.scalameta         % Test
-  )
-
   val root = List(
-    "com.typesafe.scala-logging"  %% "scala-logging"          % Version.scalaLogging,
-    "com.github.mpilquist"        %% "simulacrum"             % Version.simulacrum,
-    "ch.qos.logback"              % "logback-classic"         % Version.logback,
-    "org.scalatest"               %% "scalatest"              % Version.scalatest         % Test,
-    "org.scalamock"               %% "scalamock"              % Version.scalamock         % Test
+    "org.scala-lang"              % "scala-reflect"             % Version.scala,
+    "org.scalameta"               %% "scalameta"                % Version.scalameta,
+    "com.typesafe.scala-logging"  %% "scala-logging"            % Version.scalaLogging,
+    "com.github.mpilquist"        %% "simulacrum"               % Version.simulacrum,
+    "ch.qos.logback"              % "logback-classic"           % Version.logback,
+    "org.scalatest"               %% "scalatest"                % Version.scalatest         % Test,
+    "org.scalamock"               %% "scalamock"                % Version.scalamock         % Test,
+    "org.scalameta"               %% "testkit"                  % Version.scalameta         % Test
   )
 
 }

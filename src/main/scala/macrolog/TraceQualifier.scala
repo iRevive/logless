@@ -3,8 +3,8 @@ package macrolog
 import java.util.UUID
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 sealed trait TraceQualifier
 
 object TraceQualifier {

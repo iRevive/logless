@@ -1,7 +1,6 @@
 package macrolog
 
 import macrolog.TraceQualifier.DefinedTrace
-import macrolog.auto.Position
 
 /**
   * @author Maksim Ochenashko

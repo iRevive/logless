@@ -4,8 +4,8 @@ import scala.collection.immutable.Seq
 import scala.meta._
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 private[auto] object Utils {
 
   case class Param(mods: Seq[Mod], originalType: Type, name: Term.Name, customName: Option[Term])

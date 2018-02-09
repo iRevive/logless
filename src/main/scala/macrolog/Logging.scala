@@ -3,8 +3,8 @@ package macrolog
 import org.slf4j.LoggerFactory
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 sealed trait LoggingOps extends LogStringContextConversion with HighPriority
 
 trait LazyLogging extends LoggingOps {

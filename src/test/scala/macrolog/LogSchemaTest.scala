@@ -4,8 +4,8 @@ import macrolog.auto.loggable
 import org.scalatest.{MustMatchers, WordSpecLike}
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 class LogSchemaTest extends WordSpecLike with MustMatchers {
 
   "LogSchema" should {
@@ -15,14 +15,12 @@ class LogSchemaTest extends WordSpecLike with MustMatchers {
 
       val instance = CustomObject("myPropertyA", 1001)
 
-      val logSchema =
-        new LogSchema[CustomObject] {
-          override def schema(value: CustomObject): Map[String, String] =
-            Map(
-              "propertyA" -> value.propertyA,
-              "propertyB" -> value.propertyB.toString
-            )
-        }
+      val logSchema = LogSchema.instance[CustomObject] { value =>
+        Map(
+          "propertyA" -> value.propertyA,
+          "propertyB" -> value.propertyB.toString
+        )
+      }
 
       logSchema.schema(instance) mustBe Map("propertyA" -> "myPropertyA", "propertyB" -> "1001")
     }

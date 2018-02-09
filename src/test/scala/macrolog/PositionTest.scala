@@ -1,37 +1,36 @@
 package macrolog
 
-import macrolog.auto.Position
 import org.scalatest.{MustMatchers, WordSpecLike}
 
 import scala.util.Try
 import scala.util.control.NonFatal
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 class PositionTest extends WordSpecLike with MustMatchers {
 
   "Position" must {
 
     "correctly extract enclosing class & method" in {
 
-      fakeMethod() mustBe Position("PositionTest", Some("fakeMethod"), "macrolog.PositionTest.fakeMethod:39")
+      fakeMethod() mustBe Position("PositionTest", Some("fakeMethod"), "macrolog.PositionTest.fakeMethod:38")
 
-      lambda() mustBe Position("PositionTest", Some("lambda"), "macrolog.PositionTest.lambda:44")
+      lambda() mustBe Position("PositionTest", Some("lambda"), "macrolog.PositionTest.lambda:43")
 
-      partialFunction().apply(()) mustBe Position("PositionTest", Some("partialFunction"), "macrolog.PositionTest.partialFunction:49")
+      partialFunction().apply(()) mustBe Position("PositionTest", Some("partialFunction"), "macrolog.PositionTest.partialFunction:48")
 
-      recoverLambda() mustBe Position("PositionTest", Some("recoverLambda"), "macrolog.PositionTest.recoverLambda:54")
+      recoverLambda() mustBe Position("PositionTest", Some("recoverLambda"), "macrolog.PositionTest.recoverLambda:53")
 
       val fakeClass = new FakeClass
 
-      fakeClass.method() mustBe Position("FakeClass", Some("method"), "macrolog.PositionTest.FakeClass.method:59")
+      fakeClass.method() mustBe Position("FakeClass", Some("method"), "macrolog.PositionTest.FakeClass.method:58")
 
-      fakeClass.lambda() mustBe Position("FakeClass", Some("lambda"), "macrolog.PositionTest.FakeClass.lambda:62")
+      fakeClass.lambda() mustBe Position("FakeClass", Some("lambda"), "macrolog.PositionTest.FakeClass.lambda:61")
 
-      fakeClass.forComprehension() mustBe Position("FakeClass", Some("forComprehension"), "macrolog.PositionTest.FakeClass.forComprehension:67")
+      fakeClass.forComprehension() mustBe Position("FakeClass", Some("forComprehension"), "macrolog.PositionTest.FakeClass.forComprehension:66")
 
-      fakeClass.generatedPos() mustBe Position("FakeClass", Some("generatedPos"), "macrolog.PositionTest.FakeClass.generatedPos:70")
+      fakeClass.generatedPos() mustBe Position("FakeClass", Some("generatedPos"), "macrolog.PositionTest.FakeClass.generatedPos:69")
 
     }
   }

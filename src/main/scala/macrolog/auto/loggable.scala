@@ -8,8 +8,8 @@ import scala.collection.immutable.Seq
 import scala.meta._
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 @compileTimeOnly("loggable annotation should have been removed by compiler but was not")
 class loggable extends StaticAnnotation {
 

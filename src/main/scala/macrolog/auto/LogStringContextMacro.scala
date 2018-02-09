@@ -3,8 +3,8 @@ package macrolog.auto
 import scala.reflect.macros._
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 object LogStringContextMacro {
 
   def logImpl(c: whitebox.Context)(args: c.Expr[Any]*): c.Expr[String] = {

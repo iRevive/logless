@@ -1,14 +1,13 @@
 package macrolog
 
 import com.typesafe.scalalogging.{Logger => ScalaLogger}
-import macrolog.auto.Position
 import org.slf4j.{Logger => Underlying}
 
 import scala.reflect.ClassTag
 
 /**
- * @author Maksim Ochenashko
- */
+  * @author Maksim Ochenashko
+  */
 object Logger {
 
   def apply(scalaLogger: ScalaLogger): Logger =
@@ -29,7 +28,7 @@ object Logger {
 }
 
 @SerialVersionUID(716196318)
-final class Logger private(val underlying: ScalaLogger) extends Serializable {
+final class Logger private[macrolog](val underlying: ScalaLogger) extends Serializable {
 
   // Error
   def error(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
