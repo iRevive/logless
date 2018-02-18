@@ -6,14 +6,14 @@ object Settings {
 }
 
 object Version {
-  val scala                 = "2.12.3"
+  val scala                 = "2.12.4"
 
-  val simulacrum            = "0.10.0"
-  val scalaLogging          = "3.5.0"
+  val simulacrum            = "0.11.0"
+  val scalaLogging          = "3.7.2"
   val logback               = "1.2.3"
 
-  val scalatest             = "3.0.4"
-  val scalamock             = "4.0.0"
+  val scalatest             = "3.0.5"
+  val scalamock             = "4.1.0"
 
   val scalameta             = "1.8.0"
   val scalametaParadise     = "3.0.0-M10"
