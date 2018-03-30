@@ -1,5 +1,7 @@
 # Macrolog
-[![Download](https://api.bintray.com/packages/irevive/maven/macrolog/images/download.svg) ](https://bintray.com/irevive/maven/macrolog/_latestVersion)
+[![Download](https://api.bintray.com/packages/irevive/maven/macrolog/images/download.svg)](https://bintray.com/irevive/maven/macrolog/_latestVersion)
+[![Build Status](https://travis-ci.org/iRevive/macrolog.svg?branch=master)](https://travis-ci.org/iRevive/macrolog)
+[![Coverage Status](https://coveralls.io/repos/github/iRevive/macrolog/badge.svg?branch=master)](https://coveralls.io/github/iRevive/macrolog?branch=master)
 
 Macrolog provides a type-safe way to log entities.
  
@@ -15,7 +17,7 @@ Library built on top of [scala-logging](https://github.com/typesafehub/scala-log
 ## Installation:
 
 ```
-resolvers ++= Resolver.bintrayRepo("irevive", "maven")
+resolvers += Resolver.bintrayRepo("irevive", "maven")
 
 libraryDependencies += "io.github.irevive" %% "macrolog" % version
 
