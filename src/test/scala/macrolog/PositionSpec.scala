@@ -14,23 +14,23 @@ class PositionSpec extends WordSpecLike with MustMatchers {
 
     "correctly extract enclosing class & method" in {
 
-      fakeMethod() mustBe Position("PositionTest", Some("fakeMethod"), "macrolog.PositionTest.fakeMethod:38")
+      fakeMethod() mustBe Position("PositionSpec", Some("fakeMethod"), "macrolog.PositionSpec.fakeMethod:38")
 
-      lambda() mustBe Position("PositionTest", Some("lambda"), "macrolog.PositionTest.lambda:43")
+      lambda() mustBe Position("PositionSpec", Some("lambda"), "macrolog.PositionSpec.lambda:43")
 
-      partialFunction().apply(()) mustBe Position("PositionTest", Some("partialFunction"), "macrolog.PositionTest.partialFunction:48")
+      partialFunction().apply(()) mustBe Position("PositionSpec", Some("partialFunction"), "macrolog.PositionSpec.partialFunction:48")
 
-      recoverLambda() mustBe Position("PositionTest", Some("recoverLambda"), "macrolog.PositionTest.recoverLambda:53")
+      recoverLambda() mustBe Position("PositionSpec", Some("recoverLambda"), "macrolog.PositionSpec.recoverLambda:53")
 
       val fakeClass = new FakeClass
 
-      fakeClass.method() mustBe Position("FakeClass", Some("method"), "macrolog.PositionTest.FakeClass.method:58")
+      fakeClass.method() mustBe Position("FakeClass", Some("method"), "macrolog.PositionSpec.FakeClass.method:58")
 
-      fakeClass.lambda() mustBe Position("FakeClass", Some("lambda"), "macrolog.PositionTest.FakeClass.lambda:61")
+      fakeClass.lambda() mustBe Position("FakeClass", Some("lambda"), "macrolog.PositionSpec.FakeClass.lambda:61")
 
-      fakeClass.forComprehension() mustBe Position("FakeClass", Some("forComprehension"), "macrolog.PositionTest.FakeClass.forComprehension:66")
+      fakeClass.forComprehension() mustBe Position("FakeClass", Some("forComprehension"), "macrolog.PositionSpec.FakeClass.forComprehension:66")
 
-      fakeClass.generatedPos() mustBe Position("FakeClass", Some("generatedPos"), "macrolog.PositionTest.FakeClass.generatedPos:69")
+      fakeClass.generatedPos() mustBe Position("FakeClass", Some("generatedPos"), "macrolog.PositionSpec.FakeClass.generatedPos:69")
 
     }
   }

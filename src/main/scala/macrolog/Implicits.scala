@@ -8,7 +8,11 @@ import macrolog.TraceQualifier.DefinedTrace
 trait Implicits {
 
   @inline
-  implicit def traceQualifierToLoggingContext(implicit traceQualifier: DefinedTrace): LoggingContext =
+  implicit def traceQualifierToLoggingContext(traceQualifier: DefinedTrace): LoggingContext =
+    new TraceQualifierLoggingContext.TraceQualifierLoggingContextImpl(traceQualifier)
+
+  @inline
+  implicit def implTraceQualifierToLoggingContext(implicit traceQualifier: DefinedTrace): LoggingContext =
     new TraceQualifierLoggingContext.TraceQualifierLoggingContextImpl(traceQualifier)
 
 }
