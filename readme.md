@@ -18,6 +18,12 @@ Library built on top of [scala-logging](https://github.com/typesafehub/scala-log
 resolvers ++= Resolver.bintrayRepo("irevive", "maven")
 
 libraryDependencies += "io.github.irevive" %% "macrolog" % version
+
+resolvers += Resolver.url("scalameta", url("http://dl.bintray.com/scalameta/maven"))(Resolver.ivyStylePatterns),
+
+addCompilerPlugin("org.scalameta" %% "paradise" % "3.0.0-M10" cross CrossVersion.full)
+
+scalacOptions += "-Xplugin-require:macroparadise"
 ```
 
 ## Usage
@@ -27,7 +33,11 @@ Example:
 ```scala
 class Service extends StrictLogging {
 
-  def find(name: String)(implicit macrolog.traceId: TraceId): Unit = {
+  def find(name: String)(implicit traceId: macrolog.TraceId): Unit = {
+    logger.debug(s"Searching entity with name [$name]")
+  }
+  
+  def find(name: String)(implicit ctx: macrolog.LoggingContext): Unit = {
     logger.debug(s"Searching entity with name [$name]")
   }
 
@@ -90,7 +100,7 @@ def method3(implicit traceId: macrolog.TraceId): Unit = {
 }
 ```
 
-Just generate a new traceId on the top of the calls chain:
+Just generate a new traceId on the top of the call chain:
 ```scala
 def entryPoint(): Unit = {
   implicit val traceId = macrolog.TraceId()

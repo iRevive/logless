@@ -1,9 +1,7 @@
 package macrolog
 
 import macrolog.PositionLoggingContext.PositionLoggingContextImpl
-import macrolog.TraceQualifier.TraceId
 import macrolog.TraceQualifierLoggingContext.TraceQualifierLoggingContextImpl
-import macrolog.auto.Position
 import org.scalamock.matchers.MockParameter
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.{MustMatchers, WordSpecLike}
@@ -50,7 +48,7 @@ class LoggingContextTest extends WordSpecLike with MustMatchers with MockFactory
       val service = mock[Service]
 
       val matcher = contextMatcher[PositionLoggingContextImpl] { ctx =>
-        ctx.position == Position("LoggingContextTest", None, "macrolog.LoggingContextTest:14")
+        ctx.position == Position("LoggingContextTest", None, "macrolog.LoggingContextTest:12")
       }
 
       (service.withCtx()(_: LoggingContext)).expects(matcher).once()
@@ -100,6 +98,8 @@ class LoggingContextTest extends WordSpecLike with MustMatchers with MockFactory
           case _ =>
             false
         }
+
+      override def toString(): String = "MockedLoggingContext"
     }
   }
 }

@@ -2,8 +2,6 @@ package macrolog
 
 import macrolog.TraceQualifier.DefinedTrace
 
-import scala.language.implicitConversions
-
 /**
   * @author Maksim Ochenashko
   */
