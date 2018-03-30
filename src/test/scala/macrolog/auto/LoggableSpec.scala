@@ -9,7 +9,7 @@ import scala.meta.testkit._
 /**
   * @author Maksim Ochenashko
   */
-class LoggableTest extends WordSpecLike with MustMatchers {
+class LoggableSpec extends WordSpecLike with MustMatchers {
 
   "@loggable" should {
 

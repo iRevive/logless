@@ -5,7 +5,7 @@ import org.scalatest.{MustMatchers, WordSpecLike}
 /**
   * @author Maksim Ochenashko
   */
-class LoggableTest extends WordSpecLike with MustMatchers {
+class LoggableSpec extends WordSpecLike with MustMatchers {
 
   import Loggable.ops._
 

@@ -6,7 +6,7 @@ import org.scalatest.{MustMatchers, WordSpecLike}
 /**
   * @author Maksim Ochenashko
   */
-class LogSchemaTest extends WordSpecLike with MustMatchers {
+class LogSchemaSpec extends WordSpecLike with MustMatchers {
 
   "LogSchema" should {
 

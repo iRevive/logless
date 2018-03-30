@@ -8,7 +8,7 @@ import org.scalatest.{MustMatchers, WordSpecLike}
 /**
   * @author Maksim Ochenashko
   */
-class LoggingContextTest extends WordSpecLike with MustMatchers with MockFactory {
+class LoggingContextSpec extends WordSpecLike with MustMatchers with MockFactory {
 
   import macrolog.Implicits._
 

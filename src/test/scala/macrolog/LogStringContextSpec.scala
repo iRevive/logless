@@ -7,7 +7,7 @@ import org.scalatest.{MustMatchers, WordSpecLike}
 /**
   * @author Maksim Ochenashko
   */
-class LogStringContextTest extends WordSpecLike with MustMatchers {
+class LogStringContextSpec extends WordSpecLike with MustMatchers {
 
   "LogStringContext" must {
 

@@ -8,7 +8,7 @@ import scala.util.control.NonFatal
 /**
   * @author Maksim Ochenashko
   */
-class PositionTest extends WordSpecLike with MustMatchers {
+class PositionSpec extends WordSpecLike with MustMatchers {
 
   "Position" must {
 
