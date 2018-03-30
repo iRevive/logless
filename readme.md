@@ -115,18 +115,8 @@ def entryPoint(): Unit = {
 
 #### Custom LoggingContext
 ```scala
-case class CustomLoggingContext(user: String, 
-                                timestamp: LocalDateTime, 
-                                module: String,
-                                traceQualifier: macrolog.TraceId,
-                                position: macrolog.auto.Position) 
-  extends macrolog.TraceQualifierLoggingContext 
-    with macrolog.PositionLoggingContext {
-                                
-  override def withPosition(position: macrolog.auto.Position): this.type with macrolog.PositionLoggingContext = 
-    copy(position = position)
-  
-}
+case class CustomLoggingContext(user: String, timestamp: LocalDateTime, module: String, traceQualifier: macrolog.TraceId) 
+  extends macrolog.TraceQualifierLoggingContext
 ```
 
 #### Logback config
