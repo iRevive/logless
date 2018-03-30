@@ -25,9 +25,7 @@ trait Loggable[A] {
 
 object Loggable extends LoggableInstances {
 
-  def instance[A](op: A => String): Loggable[A] = new Loggable[A] {
-    override def print(value: A): String = op(value)
-  }
+  def instance[A](op: A => String): Loggable[A] = (value: A) => op(value)
 
 }
 
@@ -37,6 +35,7 @@ trait LoggableInstances {
 
   implicit val stringLoggable   : Loggable[String]     = Loggable.instance(identity)
   implicit val intLoggable      : Loggable[Int]        = toStringLoggable
+  implicit val shortLoggable    : Loggable[Short]        = toStringLoggable
   implicit val longLoggable     : Loggable[Long]       = toStringLoggable
   implicit val doubleLoggable   : Loggable[Double]     = toStringLoggable
   implicit val floatLoggable    : Loggable[Float]      = toStringLoggable

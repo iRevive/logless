@@ -22,7 +22,9 @@ lazy val commonSettings = Seq(
 
   resolvers ++= Seq(Resolver.mavenLocal, Resolver.sbtPluginRepo("releases")),
 
-  licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+  licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
+
+  testOptions in Test += Tests.Setup(() => sys.props += "macrolog.auto.trace" -> "true")
 )
 
 lazy val macroAnnotationSettings = Seq(

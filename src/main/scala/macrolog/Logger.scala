@@ -31,42 +31,43 @@ object Logger {
 final class Logger private[macrolog](val underlying: ScalaLogger) extends Serializable {
 
   // Error
+
   def error(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.error(message, ctx.withPosition(pos))
+    underlying.error(message, PositionLoggingContext(ctx, pos))
 
   def error(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.error(message, ctx.withPosition(pos), cause)
+    underlying.error(message, PositionLoggingContext(ctx, pos), cause)
 
   // Warn
 
   def warn(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.warn(message, ctx.withPosition(pos))
+    underlying.warn(message, PositionLoggingContext(ctx, pos))
 
   def warn(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.warn(message, ctx.withPosition(pos), cause)
+    underlying.warn(message, PositionLoggingContext(ctx, pos), cause)
 
   // Info
 
   def info(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.info(message, ctx.withPosition(pos))
+    underlying.info(message, PositionLoggingContext(ctx, pos))
 
   def info(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.info(message, ctx.withPosition(pos), cause)
+    underlying.info(message, PositionLoggingContext(ctx, pos), cause)
 
   // Debug
 
   def debug(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.debug(message, ctx.withPosition(pos))
+    underlying.debug(message, PositionLoggingContext(ctx, pos))
 
   def debug(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.debug(message, ctx.withPosition(pos), cause)
+    underlying.debug(message, PositionLoggingContext(ctx, pos), cause)
 
   // Trace
 
   def trace(message: => String)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.trace(message, ctx.withPosition(pos))
+    underlying.trace(message, PositionLoggingContext(ctx, pos))
 
   def trace(message: => String, cause: => Throwable)(implicit ctx: LoggingContext, pos: Position): Unit =
-    underlying.trace(message, ctx.withPosition(pos), cause)
+    underlying.trace(message, PositionLoggingContext(ctx, pos), cause)
 
 }

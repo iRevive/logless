@@ -34,16 +34,20 @@ private[auto] object Utils {
         .filter { d => isIncluded(d.mods) && !isExcluded(d.mods) }
         .map {
           case d@Declaration.Def(mods, name, decltpe, pos, _) =>
-            if (applicableDef(d)) Param(mods, decltpe.get, name.get, named(mods))
-            else abort(pos, "`private[this]` and `protected[this]` is not allowed. Def type must be declared explicitly")
+            applicableDef(d) match {
+              case Right(_) => Param(mods, decltpe.get, name.get, named(mods))
+              case Left(error) => abort(pos, error)
+            }
 
           case d =>
-            if (applicableDeclaration(d)) {
-              d.name.fold(abort(d.pos, "Can not extract field name")) { name =>
-                Param(d.mods, d.decltpe.get, name, named(d.mods))
-              }
-            } else {
-              abort(d.pos, s"`private[this]` and `protected[this]` is not allowed. Variable type must be declared explicitly")
+            applicableDeclaration(d) match {
+              case Right(_) =>
+                d.name.fold(abort(d.pos, "Can not extract field name")) { name =>
+                  Param(d.mods, d.decltpe.get, name, named(d.mods))
+                }
+
+              case Left(error) =>
+                abort(d.pos, error)
             }
         }
 
@@ -85,11 +89,34 @@ private[auto] object Utils {
   private def applicableParam(param: Term.Param, constructorParamAccessibleByDefault: Boolean): Boolean =
     param.mods.forall(modifierMatcher) && (constructorParamAccessibleByDefault || param.mods.exists(valOrVarModifier))
 
-  private def applicableDeclaration(v: Declaration): Boolean =
-    v.decltpe.nonEmpty && v.mods.forall(modifierMatcher)
+  private def applicableDeclaration(declaration: Declaration): Either[String, Unit] = {
+    declaration match {
+      case d if d.decltpe.isEmpty =>
+        Left(s"Member [${declaration.name.getOrElse("")}] type must be declared explicitly")
 
-  private def applicableDef(v: Declaration.Def): Boolean =
-    v.decltpe.nonEmpty && (v.paramss.isEmpty || v.paramss.head.isEmpty) && v.mods.forall(modifierMatcher)
+      case d if !d.mods.forall(modifierMatcher) =>
+        Left(s"Member [${declaration.name.getOrElse("")}] has one of restricted modifiers: `private[this]` or `protected[this]`")
+
+      case _ =>
+        Right(())
+    }
+  }
+
+  private def applicableDef(declaration: Declaration.Def): Either[String, Unit] = {
+    declaration match {
+      case d if d.decltpe.isEmpty =>
+        Left(s"Member [${declaration.name.getOrElse("")}] type must be declared explicitly")
+
+      case d if d.paramss.nonEmpty && d.paramss.head.nonEmpty =>
+        Left(s"Member [${declaration.name.getOrElse("")}] must be declared without arguments")
+
+      case d if !d.mods.forall(modifierMatcher) =>
+        Left(s"Member [${declaration.name.getOrElse("")}] has one of restricted modifiers: `private[this]` or `protected[this]`")
+
+      case _ =>
+        Right(())
+    }
+  }
 
   private val modifierMatcher: Mod => Boolean = {
     case Mod.Private(_: Term.This)   => false

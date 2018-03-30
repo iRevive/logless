@@ -5,20 +5,12 @@ import macrolog.TraceQualifier.DefinedTrace
 /**
   * @author Maksim Ochenashko
   */
-trait LowPriority {
+trait Implicits {
 
   @inline
-  implicit def positionToLoggingContext(implicit pos: Position): LoggingContext =
-    new PositionLoggingContext.PositionLoggingContextImpl(pos)
+  implicit def traceQualifierToLoggingContext(implicit traceQualifier: DefinedTrace): LoggingContext =
+    new TraceQualifierLoggingContext.TraceQualifierLoggingContextImpl(traceQualifier)
 
 }
 
-trait HighPriority extends LowPriority {
-
-  @inline
-  implicit def traceQualifierToLoggingContext(implicit traceQualifier: DefinedTrace, pos: Position): LoggingContext =
-    new TraceQualifierLoggingContext.TraceQualifierLoggingContextImpl(traceQualifier, pos)
-
-}
-
-object Implicits extends HighPriority
+object Implicits extends Implicits

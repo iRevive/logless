@@ -110,7 +110,7 @@ object LoggableMacroImpl {
 
     val logSchema: Defn.Val = logSchemaInstance(className, params)
 
-    val loggable: Defn.Val = loggableInstance(className, params)
+    val loggable: Defn.Val = loggableInstance(className)
 
     imports :+ logSchema :+ loggable
   }
@@ -133,7 +133,7 @@ object LoggableMacroImpl {
     """
   }
 
-  def loggableInstance(className: Type.Name, params: Seq[Param]): Defn.Val = {
+  def loggableInstance(className: Type.Name): Defn.Val = {
 
     val mergeExpression =
       Term.ApplyInfix(

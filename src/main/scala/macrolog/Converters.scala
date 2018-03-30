@@ -10,8 +10,8 @@ class TraceQualifierConverter extends ClassicConverter {
 
   def convert(event: ILoggingEvent): String =
     Option(event.getArgumentArray).flatMap(_.headOption) match {
-      case Some(TraceQualifierLoggingContext(trace)) => trace.asString
-      case _                                         => "undefined"
+      case Some(PositionLoggingContext(TraceQualifierLoggingContext(trace), _)) => trace.asString
+      case _                                                                    => "undefined"
     }
 
 }
@@ -20,8 +20,8 @@ class PositionConverter extends NamedConverter {
 
   protected def getFullyQualifiedName(event: ILoggingEvent): String =
     Option(event.getArgumentArray).flatMap(_.headOption) match {
-      case Some(PositionLoggingContext(pos)) => pos.fullPosition
-      case _                                 => "undefined"
+      case Some(PositionLoggingContext(_, pos)) => pos.fullPosition
+      case _                                    => "undefined"
     }
 
 }
